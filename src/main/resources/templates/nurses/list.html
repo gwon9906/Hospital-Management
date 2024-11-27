@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Nurses</title>
+</head>
+<body>
+<h1>Nurse List</h1>
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Gender</th>
+        <th>Phone</th>
+    </tr>
+    <tr th:each="nurse : ${nurses}">
+        <td th:text="${nurse.name}"></td>
+        <td th:text="${nurse.gender}"></td>
+        <td th:text="${nurse.phoneNumber}"></td>
+    </tr>
+</table>
+<a href="/nurses/create">Add Nurse</a>
+</body>
+</html>
