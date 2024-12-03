@@ -1,39 +1,62 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko"  xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>환자 검색</title>
-    <link rel="stylesheet" href="/static/css">
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-<div class="container mt-5">
-    <h1 class="text-center">환자 검색</h1>
-    <form th:action="@{/patients/search}" method="get" class="mt-4">
-        <div class="mb-3">
-            <label for="name" class="form-label">이름</label>
-            <input type="text" id="name" name="name" class="form-control" placeholder="환자의 이름을 입력하세요">
+<div class="container">
+    <h1>환자 검색</h1>
+    <form action="/patients/search" method="get">
+        <div>
+            <label for="name">이름:</label>
+            <input type="text" id="name" name="name" placeholder="환자의 이름">
         </div>
-        <div class="mb-3">
-            <label for="id" class="form-label">ID</label>
-            <input type="text" id="id" name="id" class="form-control" placeholder="환자의 ID를 입력하세요">
+        <div>
+            <label for="id">ID:</label>
+            <input type="text" id="id" name="id" placeholder="환자의 ID">
         </div>
-        <div class="mb-3">
-            <label for="birthdate" class="form-label">생년월일</label>
-            <input type="date" id="birthdate" name="birthdate" class="form-control">
+        <div>
+            <label for="birthdate">생년월일:</label>
+            <input type="date" id="birthdate" name="birthdate">
         </div>
-        <button type="submit" class="btn btn-primary">검색</button>
+        <button type="submit">검색</button>
     </form>
 
-    <!-- 검색 결과 표시 영역 -->
-    <div class="mt-5">
-        <h2 class="text-center">검색 결과</h2>
-        <ul class="list-group mt-3" th:if="${patients}">
-            <li class="list-group-item" th:each="patient : ${patients}" th:text="${patient}"></li>
-        </ul>
-        <div class="alert alert-warning mt-3" th:if="${patients == null || patients.size() == 0}">
-            검색 결과가 없습니다.
-        </div>
+    <div id="results">
+        <h2>검색 결과</h2>
+        <ul id="patient-list"></ul>
     </div>
 </div>
+
+<script>
+    // 검색 결과를 Ajax로 처리하기 위한 스크립트
+    document.querySelector('form').addEventListener('submit', function(event) {
+        event.preventDefault(); // 폼의 기본 제출 방지
+        const formData = new FormData(this);
+        const queryString = new URLSearchParams(formData).toString();
+
+        fetch('/patients/search?' + queryString)
+            .then(response => response.json())
+            .then(data => {
+                const resultList = document.getElementById('patient-list');
+                resultList.innerHTML = '';
+                if (data && data.length > 0) {
+                    data.forEach(patient => {
+                        const li = document.createElement('li');
+                        li.textContent = `이름: ${patient.name}, ID: ${patient.id}, 생년월일: ${patient.birthdate}`;
+                        resultList.appendChild(li);
+                    });
+                } else {
+                    resultList.innerHTML = '<li>검색 결과가 없습니다.</li>';
+                }
+            })
+            .catch(error => {
+                console.error('검색 중 오류 발생:', error);
+            });
+    });
+</script>
 </body>
 </html>

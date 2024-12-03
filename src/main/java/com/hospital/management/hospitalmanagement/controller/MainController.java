@@ -1,4 +1,5 @@
-package controller;
+package com.hospital.management.hospitalmanagement.controller;
+
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,7 +9,7 @@ public class MainController {
 
     @GetMapping("/")
     public String index() {
-        return "index"; // templates/index.html 로 이동
+        return "home"; // templates/home.html 로 이동
     }
 
     @GetMapping("/schedule")
@@ -18,7 +19,7 @@ public class MainController {
 
     @GetMapping("/patients")
     public String patients() {
-        return "patients"; // 전체 환자 검색 페이지
+        return "patients"; // 전체 환자 페이지
     }
 
     @GetMapping("/beds")

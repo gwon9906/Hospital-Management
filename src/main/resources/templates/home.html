@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,7 +14,7 @@
         <nav>
             <ul>
                 <li><a href="/schedule">근무표</a></li>
-                <li><a href="/patients">전체 환자 검색</a></li>
+                <li><a th:href="@{/patients}">전체 환자 검색</a></li>
                 <li><a href="/beds">병상별 환자</a></li>
                 <li><a href="/dosage">약 용량 계산</a></li>
                 <li><a href="/stock">재고 확인</a></li>
@@ -33,7 +33,7 @@
             <div class="feature-card">
                 <h2>전체 환자 검색</h2>
                 <p>모든 환자 정보를 검색하고 확인합니다.</p>
-                <a href="/patients" class="btn">이동</a>
+                <a th:href="@{/patients}" class="btn">이동</a>
             </div>
             <div class="feature-card">
                 <h2>병상별 환자</h2>
@@ -58,6 +58,6 @@
         </section>
     </main>
 
-    <script src="/js/script.js"></script>
+<!--    <script src="/js/script.js"></script>-->
 </body>
 </html>
