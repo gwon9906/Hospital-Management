@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>환자 검색</title>
+    <link rel="stylesheet" href="/static/css">
+</head>
+<body>
+<div class="container mt-5">
+    <h1 class="text-center">환자 검색</h1>
+    <form th:action="@{/patients/search}" method="get" class="mt-4">
+        <div class="mb-3">
+            <label for="name" class="form-label">이름</label>
+            <input type="text" id="name" name="name" class="form-control" placeholder="환자의 이름을 입력하세요">
+        </div>
+        <div class="mb-3">
+            <label for="id" class="form-label">ID</label>
+            <input type="text" id="id" name="id" class="form-control" placeholder="환자의 ID를 입력하세요">
+        </div>
+        <div class="mb-3">
+            <label for="birthdate" class="form-label">생년월일</label>
+            <input type="date" id="birthdate" name="birthdate" class="form-control">
+        </div>
+        <button type="submit" class="btn btn-primary">검색</button>
+    </form>
+
+    <!-- 검색 결과 표시 영역 -->
+    <div class="mt-5">
+        <h2 class="text-center">검색 결과</h2>
+        <ul class="list-group mt-3" th:if="${patients}">
+            <li class="list-group-item" th:each="patient : ${patients}" th:text="${patient}"></li>
+        </ul>
+        <div class="alert alert-warning mt-3" th:if="${patients == null || patients.size() == 0}">
+            검색 결과가 없습니다.
+        </div>
+    </div>
+</div>
+</body>
+</html>
