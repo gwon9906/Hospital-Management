@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>재고 관리</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <h1>재고 관리 시스템</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="/">홈</a></li>
+                <li><a href="/stoc  k">재고 관리</a></li>
+                <li><a href="/nurses">간호사 관리</a></li>
+                <li><a href="/patients">환자 관리</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h2>재고 목록</h2>
+        <table id="stockTable">
+            <thead>
+                <tr>
+                    <th>약품명</th>
+                    <th>수량</th>
+                    <th>유효기간</th>
+                    <th>보관위치</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- JavaScript를 통해 데이터가 동적으로 추가될 예정 -->
+            </tbody>
+        </table>
+
+        <button id="addStockBtn">재고 추가</button>
+    </main>
+
+    <script src="/js/stock.js"></script>
+</body>
+</html>

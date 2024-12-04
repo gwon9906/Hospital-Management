@@ -1,6 +1,6 @@
-package repository;
+package com.hospital.management.hospitalmanagement.repository;
 
-import model.Nurse;
+import com.hospital.management.hospitalmanagement.model.Nurse;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,8 +1,8 @@
-package controller;
+package com.hospital.management.hospitalmanagement.controller;
 
 
-import model.Nurse;
-import service.NurseService;
+import com.hospital.management.hospitalmanagement.model.Nurse;
+import com.hospital.management.hospitalmanagement.service.NurseService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;

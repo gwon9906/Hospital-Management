@@ -1,4 +1,4 @@
-package model;
+package com.hospital.management.hospitalmanagement.model;
 
 import jakarta.persistence.*;
 import java.util.List;

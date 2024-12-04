@@ -1,7 +1,7 @@
-package service;
+package com.hospital.management.hospitalmanagement.service;
 
-import model.Nurse;
-import repository.NurseRepository;
+import com.hospital.management.hospitalmanagement.model.Nurse;
+import com.hospital.management.hospitalmanagement.repository.NurseRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
