@@ -9,7 +9,7 @@ public class MainController {
 
     @GetMapping("/")
     public String index() {
-        return "home"; // templates/home.html 로 이동
+        return "index"; // templates/index.html 로 이동
     }
 
     @GetMapping("/schedule")

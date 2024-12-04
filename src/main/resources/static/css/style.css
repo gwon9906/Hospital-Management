@@ -1,4 +1,8 @@
 /* style.css */
+html ,body {
+    height: 100%;
+}
+
 body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -6,6 +10,11 @@ body {
     box-sizing: border-box;
     background-color: #f9f9f9;
     color: #333;
+}
+
+.contents {
+    height:100%;
+    border-bottom: 98px;
 }
 
 header {
@@ -41,6 +50,7 @@ header nav ul li a {
 
 main {
     padding: 20px;
+    height: calc(100% - 166px);
 }
 
 .feature-section {
@@ -87,4 +97,127 @@ main {
 
 .feature-card .btn:hover {
     background-color: #0056b3;
+}
+
+/* 푸터 스타일 */
+footer {
+    background-color: #f5f5f5;
+    text-align: center;
+    padding: 10px;
+    font-size: 14px;
+}
+
+/* patients 페이지 css */
+.search-section {
+    margin-bottom: 20px;
+    padding: 10px 0;
+}
+
+.search-bar {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+}
+
+.search-bar input {
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    width: 150px;
+}
+
+.search-bar button {
+    padding: 8px 16px;
+    font-size: 16px;
+    color: white;
+    background-color: #d32f2f;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.search-bar button:hover {
+    background-color: #a32626;
+}
+
+/* 검색 결과 테이블 */
+.results-section h2 {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+}
+
+.results-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.results-table th, .results-table td {
+    border: 1px solid #ddd;
+    text-align: center;
+    padding: 8px;
+}
+
+.results-table th {
+    background-color: #f5f5f5;
+    font-weight: bold;
+}
+
+.results-table td {
+    height: 40px;
+    word-wrap: break-word;
+    word-break: break-word;
+    white-space: normal;
+}
+
+/* 병상페이지 CSS */
+.search-dropdown {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.search-dropdown select,
+.search-dropdown button {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.search-dropdown button {
+    background-color: #d43f3a;
+    color: #fff;
+    cursor: pointer;
+    border: none;
+}
+
+.beds {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.bed {
+    padding: 15px;
+    background-color: #e0e0e0;
+    border-radius: 5px;
+    text-align: left;
+}
+
+.bed h2 {
+    margin: 0;
+    font-size: 18px;
+    color: #333;
+}
+
+.bed p {
+    margin: 5px 0 0;
+    font-size: 14px;
+    color: #666;
 }
