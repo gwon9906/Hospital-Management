@@ -31,7 +31,7 @@ public class MainController {
 
     @GetMapping("/patients")
     public String patients() {
-        return "patients"; // 전체 환자 검색 페이지
+        return "patients"; // 전체 환자 페이지
     }
 
     @GetMapping("/beds")
