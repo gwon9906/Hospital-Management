@@ -22,8 +22,8 @@ public class PatientController {
     private PatientRepository patientRepository;
 
     @GetMapping("/search")
-    public String searchPatients(@RequestParam(required = false) String name,
-                                 @RequestParam(required = false) Long id,
+    public String searchPatients(@RequestParam(name = "name", required = false) String name,
+                                 @RequestParam(name = "id", required = false) Long id,
                                  Model model) {
         List<Patient> patients = new ArrayList<>();
 
