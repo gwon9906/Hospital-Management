@@ -45,13 +45,15 @@
                     <th>전화번호</th>
                 </tr>
                 </thead>
-                <tbody id="results-body">
-                <tr th:each="patient : ${patients}">
+                <tr th:each="patient : ${patients}" class="hover"
+                    th:onclick="'window.location.href=\'/patient_personal/' + ${patient.id} + '\';'" style="cursor: pointer;">
+                    <a th:href="@{/patient_personal/{id}(id=${patient.id})}">
                     <td th:text="${patient.name}"></td>
                     <td th:text="${patient.id}"></td>
                     <td th:text="${patient.gender}"></td>
                     <td th:text="${patient.birthDate}"></td>
                     <td th:text="${patient.phone}"></td>
+                    </a>    <!-- 오류 발생 시 a 태그 삭제하자... -->
                 </tr>
                 </tbody>
             </table>

@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface BedRepository extends JpaRepository<Bed, Long> {
     List<Bed> findByRoomNumberAndDayOutIsNull(Integer roomNumber);
+
+    Bed findByRoomNumberAndBedNumberAndDayOutIsNull(Integer roomNumber, Integer bedNumber);
 }
