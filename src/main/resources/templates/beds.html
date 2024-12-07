@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>스마트 간호사 서비스</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<header>
+    <div class="logo">
+        <h1><a href="/">병원 관리 시스템</a></h1>
+    </div>
+    <nav>
+        <ul>
+            <li><a href="/schedule">근무표</a></li>
+            <li><a href="/patients">전체 환자 검색</a></li>
+            <li><a href="/beds">병상별 환자</a></li>
+            <li><a href="/dosage">약 용량 계산</a></li>
+            <li><a href="/stock">재고 확인</a></li>
+            <li><a href="/organization">진료과 조직도</a></li>
+        </ul>
+    </nav>
+</header>
+<main>
+    <form th:action="@{/show}" method="get">
+        <div class="search-dropdown">
+            <select id="department" name="dp" aria-label="담당과 선택">
+                <option value="">담당과 선택</option>
+                <option value="internal">내과</option>
+                <option value="surgery">외과</option>
+                <option value="pediatrics">소아과</option>
+                <option value="obstetrics">산부인과</option>
+            </select>
+            <select id="room" name="room" aria-label="병실 번호 선택">
+                <option value="">병실번호 선택</option>
+            </select>
+            <button type="submit" id="search-button">검색</button>
+        </div>
+    </form>
+    <div class="beds">
+        <div class="left">
+            <div th:if="${bedMap[1] != null and bedMap[1].dayOut == null}"
+                 th:onclick="'window.location.href=\'/bedDetails?roomNumber=' + ${bedMap[1].roomNumber} + '&bedNumber=' + ${bedMap[1].bedNumber} + '\';'"
+                 style="cursor: pointer; border: 1px solid gray; padding: 10px; border-radius: 5px; margin-bottom: 10px;">
+                <h2 th:text="'배드 1 : ' + (${bedMap[1].patient != null ? bedMap[1].patient.name : '없음'})"></h2>
+                <p th:text="'입원일자 : ' + (${bedMap[1].dayIn != null ? #dates.format(bedMap[1].dayIn, 'yyyy-MM-dd') : '정보 없음'})"></p>
+            </div>
+            <div th:if="${bedMap[2] != null and bedMap[2].dayOut == null}"
+                 th:onclick="'window.location.href=\'/bedDetails?roomNumber=' + ${bedMap[2].roomNumber} + '&bedNumber=' + ${bedMap[2].bedNumber} + '\';'"
+                 style="cursor: pointer; border: 1px solid gray; padding: 10px; border-radius: 5px; margin-bottom: 10px;">
+                <h2 th:text="'배드 2 : ' + (${bedMap[2].patient != null ? bedMap[2].patient.name : '없음'})"></h2>
+                <p th:text="'입원일자 : ' + (${bedMap[2].dayIn != null ? #dates.format(bedMap[2].dayIn, 'yyyy-MM-dd') : '정보 없음'})"></p>
+            </div>
+        </div>
+        <div class="right">
+            <div th:if="${bedMap[3] != null and bedMap[3].dayOut == null}"
+                 th:onclick="'window.location.href=\'/bedDetails?roomNumber=' + ${bedMap[3].roomNumber} + '&bedNumber=' + ${bedMap[3].bedNumber} + '\';'"
+                 style="cursor: pointer; border: 1px solid gray; padding: 10px; border-radius: 5px; margin-bottom: 10px;">
+                <h2 th:text="'배드 3 : ' + (${bedMap[3].patient != null ? bedMap[3].patient.name : '없음'})"></h2>
+                <p th:text="'입원일자 : ' + (${bedMap[3].dayIn != null ? #dates.format(bedMap[3].dayIn, 'yyyy-MM-dd') : '정보 없음'})"></p>
+            </div>
+            <div th:if="${bedMap[4] != null and bedMap[4].dayOut == null}"
+                 th:onclick="'window.location.href=\'/bedDetails?roomNumber=' + ${bedMap[4].roomNumber} + '&bedNumber=' + ${bedMap[4].bedNumber} + '\';'"
+                 style="cursor: pointer; border: 1px solid gray; padding: 10px; border-radius: 5px; margin-bottom: 10px;">
+                <h2 th:text="'배드 4 : ' + (${bedMap[4].patient != null ? bedMap[4].patient.name : '없음'})"></h2>
+                <p th:text="'입원일자 : ' + (${bedMap[4].dayIn != null ? #dates.format(bedMap[4].dayIn, 'yyyy-MM-dd') : '정보 없음'})"></p>
+            </div>
+        </div>
+    </div>
+</main>
+<footer>
+    <p>동의대학교 컴퓨터공학과 데이터베이스 프로그래밍 2팀<br>
+        류현서(팀장) 이해권(팀원) 이은진(팀원)</p>
+    <p>COPYRIGHT(C) DEU-COMPUTERSCIENCE. ALL RIGHTS RESERVED.</p>
+</footer>
+<script>
+    document.getElementById("department").addEventListener("change", function () {
+        const department = this.value;
+        const roomSelect = document.getElementById("room");
+
+        // 병실 데이터
+        const roomData = {
+            internal: ["101", "102", "103", "104"], // 내과
+            surgery: ["201", "202", "203", "204"], // 외과
+            pediatrics: ["301", "302", "303", "304"], // 소아과
+            obstetrics: ["401", "402", "403", "404"], // 산부인과
+        };
+
+        // 병실 선택 초기화
+        roomSelect.innerHTML = '<option value="">병실번호 선택</option>';
+        roomSelect.disabled = true;
+
+        // 선택된 담당과에 따른 병실 번호 추가
+        if (roomData[department]) {
+            roomData[department].forEach((room) => {
+                const option = document.createElement("option");
+                option.value = room;
+                option.textContent = `${room}호`;
+                roomSelect.appendChild(option);
+            });
+            roomSelect.disabled = false;
+        }
+    });
+</script>
+</body>
+</html>
+
+
+<!--    <div class="beds">-->
+<!--        <div class="left">-->
+<!--            <div th:if="${bedMap[1] != null}">-->
+<!--                <h2 th:text="'배드 1 : ' + ${bedMap[1].patient != null ? bedMap[1].patient.name : '없음'}"></h2>-->
+<!--                <p th:text="'입원일자 : ' + (${bedMap[1].dayIn != null ? #dates.format(bedMap[1].dayIn, 'yyyy-MM-dd') : '정보 없음'})"></p>-->
+<!--            </div>-->
+<!--            <div th:if="${bedMap[2] != null}">-->
+<!--                <h2 th:text="'배드 2 : ' + ${bedMap[2].patient != null ? bedMap[2].patient.name : '없음'}"></h2>-->
+<!--                <p th:text="'입원일자 : ' + (${bedMap[2].dayIn != null ? #dates.format(bedMap[2].dayIn, 'yyyy-MM-dd') : '정보 없음'})"></p>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <div class="right">-->
+<!--            <div th:if="${bedMap[3] != null}">-->
+<!--                <h2 th:text="'배드 3 : ' + ${bedMap[3].patient != null ? bedMap[3].patient.name : '없음'}"></h2>-->
+<!--                <p th:text="'입원일자 : ' + (${bedMap[3].dayIn != null ? #dates.format(bedMap[3].dayIn, 'yyyy-MM-dd') : '정보 없음'})"></p>-->
+<!--            </div>-->
+<!--            <div th:if="${bedMap[4] != null}">-->
+<!--                <h2 th:text="'배드 4 : ' + ${bedMap[4].patient != null ? bedMap[4].patient.name : '없음'}"></h2>-->
+<!--                <p th:text="'입원일자 : ' + (${bedMap[4].dayIn != null ? #dates.format(bedMap[4].dayIn, 'yyyy-MM-dd') : '정보 없음'})"></p>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->

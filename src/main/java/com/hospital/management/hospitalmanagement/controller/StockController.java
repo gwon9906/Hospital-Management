@@ -1,12 +1,9 @@
 package com.hospital.management.hospitalmanagement.controller;
 
-import com.hospital.management.hospitalmanagement.model.Stock;
 import com.hospital.management.hospitalmanagement.service.StockService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-
-import java.util.List;
 
 @Controller
 public class StockController {
@@ -17,4 +14,9 @@ public class StockController {
         this.stockService = stockService;
     }
 
+    @GetMapping("/stock")
+    public String stockPage(Model model) {
+        model.addAttribute("stocks", stockService.getAllStocks());
+        return "stock"; // 기존 재고 관리 페이지
+    }
 }

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,21 +15,36 @@
     <link href="/css/calendar.css" rel="stylesheet">
 </head>
 <body>
-<div class="calendar-container">
-    <h1>간호사 근무 캘린더</h1>
-    <div class="calendar-actions">
-        <input type="text" id="nurseNameInput" placeholder="간호사 이름 검색" />
-        <button id="searchButton">검색</button>
+    <header>
+        <div class="logo">
+            <h1><a href="/">병원 관리 시스템</a></h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="/schedule">근무표</a></li>
+                <li><a href="/patients">전체 환자 검색</a></li>
+                <li><a href="/beds">병상별 환자</a></li>
+                <li><a href="/dosage">약 용량 계산</a></li>
+                <li><a href="/stock">재고 확인</a></li>
+                <li><a href="/organization">진료과 조직도</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="calendar-container">
+        <h1>간호사 근무 캘린더</h1>
+        <div class="calendar-actions">
+            <input type="text" id="nurseNameInput" placeholder="간호사 이름 검색" />
+            <button id="searchButton">검색</button>
+        </div>
+        <div id="calendar"></div>
     </div>
-    <div id="calendar"></div>
-</div>
 
-<!-- jQuery와 Moment.js (FullCalendar v5.x에서는 Moment.js 사용을 권장하지 않음) -->
-<!-- Moment.js를 사용하려면, v3.x에서만 필요 -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <!-- jQuery와 Moment.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 
-<!-- calendar.js 파일 -->
-<script src="/js/calendar.js"></script>
+    <!-- calendar.js 파일 -->
+    <script src="/js/calendar.js"></script>
 </body>
 </html>
