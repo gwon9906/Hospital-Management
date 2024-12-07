@@ -94,12 +94,20 @@ public class BedController {
     @PostMapping("/discharge")
     @ResponseBody
     public ResponseEntity<String> dischargePatient(@RequestBody Map<String, Object> requestData) {
-        Long patientId = ((Number) requestData.get("patientId")).longValue();
+        //디버깅 코드
+        System.out.println("Request Data: " + requestData);
+
+        Long patientId; //NULL인 경우 예외 처리
+        try {
+            patientId = ((Number) requestData.get("patientId")).longValue();
+        } catch (NullPointerException | ClassCastException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid patientId.");
+        }
 
         try {
             bedService.dischargePatient(patientId);
-            // 성공적으로 처리된 경우 리디렉션 URL 반환
-            return ResponseEntity.ok("/beds");
+            // 성공 시 단순히 "OK" 응답
+            return ResponseEntity.ok("퇴원 처리 성공");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("퇴원 처리에 실패했습니다.");
         }

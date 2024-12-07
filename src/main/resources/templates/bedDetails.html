@@ -98,7 +98,7 @@
       });
     });
 
-    function dischargePatient(patientId) {
+    document.getElementById('discharge-button').addEventListener('click', function() {
       if (!confirm("퇴원 수속을 진행하시겠습니까?")) {
         return;
       }
@@ -110,20 +110,21 @@
         },
         body: JSON.stringify({ patientId: patientId }),
       })
-              .then(response => {
+        .then(response => {
                 if (response.ok) {
-                  return response.text(); // 성공 시 리디렉션 URL 가져오기
+                alert('퇴원 수속이 완료되었습니다.');
+                  window.history.back(); // 이전 페이지로 돌아감
                 } else {
-                  throw new Error("퇴원 처리에 실패했습니다.");
+                  throw new Error(`Error ${response.status}: ${errorMessage}`);
                 }
               })
               .then(redirectUrl => {
-                window.location.href = redirectUrl; // beds 페이지로 리디렉션
+                window.history.back(); // 이전 페이지로 돌아감
               })
               .catch(error => {
                 alert(error.message);
-              });
-    }
+              });  // 이 함수가 호출됨
+    });
   </script>
 </main>
 <footer>

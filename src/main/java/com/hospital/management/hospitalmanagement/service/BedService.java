@@ -28,6 +28,7 @@ public class BedService {
         return bedRepository.findByRoomNumberAndBedNumberAndDayOutIsNull(roomNumber, bedNumber);
     }
 
+    //병상 이동
     public void moveBed(Long patientId, Integer newRoomNumber, Integer newBedNumber) {
         try {
             entityManager.createStoredProcedureQuery("MOVE_BED")
@@ -47,7 +48,7 @@ public class BedService {
     @Transactional
     public void dischargePatient(Long patientId) {
         Query query = entityManager.createQuery(
-                "UPDATE Bed b SET b.dayOut = CURRENT_DATE WHERE b.patient.id = :patientId AND b.dayOut IS NULL"
+                "UPDATE Bed b SET b.dayOut = CURRENT_TIMESTAMP WHERE b.patient.id = :patientId AND b.dayOut IS NULL"
         );
         query.setParameter("patientId", patientId);
         query.executeUpdate();
