@@ -19,9 +19,4 @@ public interface ScheduleRepository extends JpaRepository<Schedule, Long> {
     // 간호사 ID와 근무일자 범위로 스케줄 조회
     List<Schedule> findByNurse_IdAndWorkDateBetween(Long nurseId, LocalDateTime startDate, LocalDateTime endDate);
 
-    // 간호사 이름과 근무일자 범위로 스케줄 조회 (추가 기능)
-    List<Schedule> findByNurse_NameAndWorkDateBetween(String nurseName, LocalDateTime startDate, LocalDateTime endDate);
-
-    // 간호사 이름과 근무일자 범위, 근무유형으로 스케줄 조회 (추가 기능)
-    List<Schedule> findByNurse_NameAndWorkDateBetweenAndWorkType(String nurseName, LocalDateTime startDate, LocalDateTime endDate, String workType);
 }

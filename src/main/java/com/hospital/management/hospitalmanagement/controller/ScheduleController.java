@@ -35,19 +35,13 @@ public class ScheduleController {
 
         try {
             // 간호사 이름과 날짜 범위가 주어졌을 때
-            if (nurseName != null && startDate != null && endDate != null) {
-                System.out.println("Fetching schedules by nurseName: " + nurseName + ", startDate: " + startDate + ", endDate: " + endDate);
-                schedules = scheduleService.getSchedulesByNurseNameAndDateRange(nurseName, startDate, endDate, shift);
-            } else if (nurseName != null) {
+            if (nurseName != null) {
                 // 간호사 이름만 주어졌을 때
                 System.out.println("Fetching schedules by nurseName: " + nurseName);
                 schedules = scheduleService.getSchedulesByNurseName(nurseName);
-            } else if (startDate != null && endDate != null) {
-                // 날짜 범위만 주어졌을 때
-                System.out.println("Fetching schedules by date range: " + startDate + " to " + endDate);
-                schedules = scheduleService.getSchedulesByDateRange(startDate, endDate, shift);
-            } else {
-                // 간호사 이름, 날짜 범위가 없을 경우 (모든 스케줄)
+            }
+            else {
+                // 간호사 이름, 날짜 범위가 없으면 모든 스케줄 조회
                 System.out.println("Fetching all schedules.");
                 schedules = scheduleService.getAllSchedules();
             }
@@ -79,19 +73,12 @@ public class ScheduleController {
         List<Map<String, Object>> events = new ArrayList<>();
 
         try {
-            // 간호사 이름과 날짜 범위 및 근무유형이 주어졌을 때
-            if (nurseName != null && startDate != null && endDate != null) {
-                System.out.println("Fetching schedules by nurseName: " + nurseName + ", startDate: " + startDate + ", endDate: " + endDate);
-                schedules = scheduleService.getSchedulesByNurseNameAndDateRange(nurseName, startDate, endDate, shift);
-            } else if (nurseName != null) {
+            if (nurseName != null) {
                 // 간호사 이름만 주어졌을 때
                 System.out.println("Fetching schedules by nurseName: " + nurseName);
                 schedules = scheduleService.getSchedulesByNurseName(nurseName);
-            } else if (startDate != null && endDate != null) {
-                // 날짜 범위만 주어졌을 때
-                System.out.println("Fetching schedules by date range: " + startDate + " to " + endDate);
-                schedules = scheduleService.getSchedulesByDateRange(startDate, endDate, shift);
-            } else {
+            }
+            else {
                 // 간호사 이름, 날짜 범위가 없으면 모든 스케줄 조회
                 System.out.println("Fetching all schedules.");
                 schedules = scheduleService.getAllSchedules();
@@ -116,7 +103,8 @@ public class ScheduleController {
                     String formattedWorkDate = schedule.getWorkDate().format(formatter);
                     String formattedEndTime = (schedule.getEndTime() != null) ? schedule.getEndTime().format(formatter) : formattedWorkDate;
 
-                    event.put("title", schedule.getWorkType() + " - " + nurseNameStr);
+                    // 근무자 이름과 근무 유형을 이벤트 객체에 넣기
+                    event.put("title", nurseNameStr + " - " + schedule.getWorkType());  // 근무자 이름과 근무 유형
                     event.put("start", formattedWorkDate);
                     event.put("end", formattedEndTime);
                     events.add(event);

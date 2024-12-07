@@ -19,16 +19,6 @@ public class ScheduleService {
         return scheduleRepository.findByWorkDateBetweenAndWorkType(startDateTime, endDateTime, shift);
     }
 
-    // 간호사 이름과 날짜 범위로 스케줄 조회
-    public List<Schedule> getSchedulesByNurseNameAndDateRange(String nurseName, String startDate, String endDate, String shift) {
-        // 날짜 형식 변환 (예시: "2024-12-07" -> LocalDateTime)
-        LocalDateTime start = LocalDateTime.parse(startDate + "T00:00:00");
-        LocalDateTime end = LocalDateTime.parse(endDate + "T23:59:59");
-
-        // 간호사 이름과 날짜 범위, 근무유형으로 스케줄 조회
-        return scheduleRepository.findByNurse_NameAndWorkDateBetweenAndWorkType(nurseName, start, end, shift);
-    }
-
     // 간호사 이름으로 스케줄 조회
     public List<Schedule> getSchedulesByNurseName(String nurseName) {
         if (nurseName != null && !nurseName.isEmpty()) {
@@ -42,13 +32,4 @@ public class ScheduleService {
         return scheduleRepository.findAll();
     }
 
-    // 날짜 범위와 근무유형으로 스케줄 조회
-    public List<Schedule> getSchedulesByDateRange(String startDate, String endDate, String shift) {
-        // 날짜 형식 변환 (예시: "2024-12-07" -> LocalDateTime)
-        LocalDateTime start = LocalDateTime.parse(startDate + "T00:00:00");
-        LocalDateTime end = LocalDateTime.parse(endDate + "T23:59:59");
-
-        // 날짜 범위와 근무유형으로 스케줄 조회
-        return scheduleRepository.findByWorkDateBetweenAndWorkType(start, end, shift);
-    }
 }
