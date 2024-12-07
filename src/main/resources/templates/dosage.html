@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>투약량 계산</title>
+</head>
+<body>
+<h1>투약량 계산</h1>
+<form method="post" th:action="@{/dosage/calculate}">
+    <label for="stock">약품:</label>
+    <select id="stock" name="stockId" required>
+        <option th:each="stock : ${stocks}" th:value="${stock.id}" th:text="${stock.name}"></option>
+    </select>
+
+    <label for="weight">몸무게 (kg):</label>
+    <input type="number" step="0.1" id="weight" name="weight" required>
+
+    <label for="ratePerHour">시간당 투약량 (mg/kg/hr):</label>
+    <input type="number" step="0.1" id="ratePerHour" name="ratePerHour" required>
+
+    <label for="hours">투약 시간 (hr):</label>
+    <input type="number" step="0.1" id="hours" name="hours" required>
+
+    <button type="submit">계산</button>
+</form>
+
+<div th:if="${totalDosage}">
+    <h2>계산 결과</h2>
+    <p>몸무게: <span th:text="${weight}"></span> kg</p>
+    <p>시간당 투약량: <span th:text="${ratePerHour}"></span> mg/kg/hr</p>
+    <p>투약 시간: <span th:text="${hours}"></span> hr</p>
+    <p>총 투약량: <span th:text="${totalDosage}"></span> mg</p>
+
+    <form method="post" th:action="@{/dosage/prescribe}">
+        <input type="hidden" name="stockId" th:value="${stock.id}">
+        <input type="hidden" name="dosage" th:value="${totalDosage}">
+        <button type="submit">처방</button>
+    </form>
+</div>
+<p th:if="${success}" th:text="${success}" style="color:green;"></p>
+<p th:if="${error}" th:text="${error}" style="color:red;"></p>
+</body>
+</html>
