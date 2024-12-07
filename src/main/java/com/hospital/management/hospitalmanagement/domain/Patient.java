@@ -27,5 +27,8 @@ public class Patient {
 
     @Column(name = "전화번호", nullable = false)
     private String phone;
+
+    @Column(name = "주소", nullable = false)
+    private String address;
 }
 

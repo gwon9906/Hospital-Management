@@ -1,13 +1,14 @@
 package com.hospital.management.hospitalmanagement.controller;
 
+import com.hospital.management.hospitalmanagement.domain.MedicalRecord;
 import com.hospital.management.hospitalmanagement.domain.Patient;
 import com.hospital.management.hospitalmanagement.repository.PatientRepository;
+import com.hospital.management.hospitalmanagement.service.MedicalRecordService;
 import com.hospital.management.hospitalmanagement.service.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
@@ -20,6 +21,8 @@ public class PatientController {
     private PatientService patientService;
     @Autowired
     private PatientRepository patientRepository;
+    @Autowired
+    private MedicalRecordService medicalRecordService;
 
     @GetMapping("/search")
     public String searchPatients(@RequestParam(name = "name", required = false) String name,
@@ -49,16 +52,21 @@ public class PatientController {
         return "patients";
     }
 
-    @GetMapping("/patient_personal/{id}")
-    public String getPatientDetails(@PathVariable("id") Long id, Model model) {
-        // 환자 ID로 환자 정보 가져오기 (예: patientService를 사용)
-        Optional patient = patientRepository.findById(id);
+    @GetMapping("/patient_personal")
+    public String getPatientDetails(Long id, Model model) {
+        Optional<Patient> optionalPatient = patientService.findById(id);
+        if (optionalPatient.isPresent()) {
+            Patient patient = optionalPatient.get();
+            List<MedicalRecord> medicalRecords = medicalRecordService.findByPatientOrderByDateDesc(patient);
 
-        // 환자 정보를 모델에 추가
-        model.addAttribute("patient", patient);
+            model.addAttribute("patient", patient);
+            model.addAttribute("medicalRecords", medicalRecords);
+        } else {
+            // 환자 ID가 잘못된 경우 처리
+            model.addAttribute("error", "환자를 찾을 수 없습니다.");
+        }
 
-        // 환자 상세 페이지로 이동
-        return "patient_personal";  // patient_personal.html로 이동
+        return "patient_personal";
     }
 }
 

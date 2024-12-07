@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>스마트 간호사 서비스</title>
-  <link rel="stylesheet" href="../static/css/style.css">
+  <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
 <header>
@@ -28,17 +28,17 @@
     <table class="info-table">
       <tr>
         <td class="form">이름</td>
-        <td></td>
+        <td th:text="${patient.name}"></td>
         <td class="form">성별</td>
-        <td></td>
+        <td th:text="${patient.gender}"></td>
         <td class="form">생년월일</td>
-        <td></td>
+        <td th:text="${#dates.format(patient.birthDate, 'yyyy-MM-dd')}"></td>
         <td class="form">전화번호</td>
-        <td></td>
+        <td th:text="${patient.phone}"></td>
       </tr>
       <tr>
         <td class="form">주소</td>
-        <td colspan="7"></td>
+        <td colspan="7" th:text="${patient.address}"></td>
       </tr>
     </table>
   </section>
@@ -47,54 +47,26 @@
     <table class="records-table">
       <thead>
       <tr>
-        <th>진료일자</th>
-        <th>진료과목</th>
+        <th>진료ID</th>
+        <th>진료일지</th>
         <th>진단 내용</th>
         <th>처방 내용</th>
         <th>수납비</th>
       </tr>
       </thead>
       <tbody>
-      <!-- 5 rows for data -->
-      <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-      </tr>
-      <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-      </tr>
-      <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-      </tr>
-      <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-      </tr>
-      <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
+      <tr th:each="record : ${medicalRecords}">
+        <td th:text="${record.id}"></td>
+        <td th:text="${#dates.format(record.date, 'yyyy-MM-dd')}"></td>
+        <td th:text="${record.diagnosis}"></td>
+        <td th:text="${record.prescription}"></td>
+        <td th:text="${record.fee}"></td>
       </tr>
       </tbody>
     </table>
   </section>
 </main>
+
 
 <footer>
   <p>동의대학교 컴퓨터공학과 데이터베이스 프로그래밍 2팀</p>
