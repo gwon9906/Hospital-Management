@@ -41,7 +41,7 @@ public class ScheduleController {
                 schedules = scheduleService.getSchedulesByNurseName(nurseName);
             }
             else {
-                // 간호사 이름, 날짜 범위가 없으면 모든 스케줄 조회
+                // 간호사 이름, 날짜 범위가 없을 경우 (모든 스케줄)
                 System.out.println("Fetching all schedules.");
                 schedules = scheduleService.getAllSchedules();
             }
@@ -103,8 +103,7 @@ public class ScheduleController {
                     String formattedWorkDate = schedule.getWorkDate().format(formatter);
                     String formattedEndTime = (schedule.getEndTime() != null) ? schedule.getEndTime().format(formatter) : formattedWorkDate;
 
-                    // 근무자 이름과 근무 유형을 이벤트 객체에 넣기
-                    event.put("title", nurseNameStr + " - " + schedule.getWorkType());  // 근무자 이름과 근무 유형
+                    event.put("title", schedule.getWorkType() + " - " + nurseNameStr);
                     event.put("start", formattedWorkDate);
                     event.put("end", formattedEndTime);
                     events.add(event);
