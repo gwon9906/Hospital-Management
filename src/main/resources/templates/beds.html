@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -23,40 +23,49 @@
     </nav>
 </header>
 <main>
-    <div class="search-dropdown">
-        <select id="department" aria-label="담당과 선택">
-            <option value="">담당과 선택</option>
-            <option value="internal">내과</option>
-            <option value="surgery">외과</option>
-            <option value="pediatrics">소아과</option>
-            <option value="obstetrics">산부인과</option>
-        </select>
-        <select id="room" aria-label="병실 번호 선택">
-            <option value="">병실번호 선택</option>
-        </select>
-        <button type="submit" id="search-button">검색</button>
-    </div>
-
+    <form th:action="@{/show}" method="get">
+        <div class="search-dropdown">
+            <select id="department" name="dp" aria-label="담당과 선택">
+                <option value="">담당과 선택</option>
+                <option value="internal">내과</option>
+                <option value="surgery">외과</option>
+                <option value="pediatrics">소아과</option>
+                <option value="obstetrics">산부인과</option>
+            </select>
+            <select id="room" name="room" aria-label="병실 번호 선택">
+                <option value="">병실번호 선택</option>
+            </select>
+            <button type="submit" id="search-button">검색</button>
+        </div>
+    </form>
     <div class="beds">
         <div class="left">
-        <div class="bed">
-            <h2>배드 1 : 김환자 (65)</h2>
-            <p>입원일자 : 2024-09-08</p>
-        </div>
-        <div class="bed">
-            <h2>배드 2 : 박환자 (23)</h2>
-            <p>입원일자 : 2024-11-02</p>
-        </div>
+            <div th:if="${bedMap[1] != null and bedMap[1].dayOut == null}"
+                 th:onclick="'window.location.href=\'/bedDetails?roomNumber=' + ${bedMap[1].roomNumber} + '&bedNumber=' + ${bedMap[1].bedNumber} + '\';'"
+                 style="cursor: pointer; border: 1px solid gray; padding: 10px; border-radius: 5px; margin-bottom: 10px;">
+                <h2 th:text="'배드 1 : ' + (${bedMap[1].patient != null ? bedMap[1].patient.name : '없음'})"></h2>
+                <p th:text="'입원일자 : ' + (${bedMap[1].dayIn != null ? #dates.format(bedMap[1].dayIn, 'yyyy-MM-dd') : '정보 없음'})"></p>
+            </div>
+            <div th:if="${bedMap[2] != null and bedMap[2].dayOut == null}"
+                 th:onclick="'window.location.href=\'/bedDetails?roomNumber=' + ${bedMap[2].roomNumber} + '&bedNumber=' + ${bedMap[2].bedNumber} + '\';'"
+                 style="cursor: pointer; border: 1px solid gray; padding: 10px; border-radius: 5px; margin-bottom: 10px;">
+                <h2 th:text="'배드 2 : ' + (${bedMap[2].patient != null ? bedMap[2].patient.name : '없음'})"></h2>
+                <p th:text="'입원일자 : ' + (${bedMap[2].dayIn != null ? #dates.format(bedMap[2].dayIn, 'yyyy-MM-dd') : '정보 없음'})"></p>
+            </div>
         </div>
         <div class="right">
-        <div class="bed">
-            <h2>배드 3 : 최환자 (15)</h2>
-            <p>입원일자 : 2024-10-08</p>
-        </div>
-        <div class="bed">
-            <h2>배드 4 :</h2>
-            <p>입원일자 :</p>
-        </div>
+            <div th:if="${bedMap[3] != null and bedMap[3].dayOut == null}"
+                 th:onclick="'window.location.href=\'/bedDetails?roomNumber=' + ${bedMap[3].roomNumber} + '&bedNumber=' + ${bedMap[3].bedNumber} + '\';'"
+                 style="cursor: pointer; border: 1px solid gray; padding: 10px; border-radius: 5px; margin-bottom: 10px;">
+                <h2 th:text="'배드 3 : ' + (${bedMap[3].patient != null ? bedMap[3].patient.name : '없음'})"></h2>
+                <p th:text="'입원일자 : ' + (${bedMap[3].dayIn != null ? #dates.format(bedMap[3].dayIn, 'yyyy-MM-dd') : '정보 없음'})"></p>
+            </div>
+            <div th:if="${bedMap[4] != null and bedMap[4].dayOut == null}"
+                 th:onclick="'window.location.href=\'/bedDetails?roomNumber=' + ${bedMap[4].roomNumber} + '&bedNumber=' + ${bedMap[4].bedNumber} + '\';'"
+                 style="cursor: pointer; border: 1px solid gray; padding: 10px; border-radius: 5px; margin-bottom: 10px;">
+                <h2 th:text="'배드 4 : ' + (${bedMap[4].patient != null ? bedMap[4].patient.name : '없음'})"></h2>
+                <p th:text="'입원일자 : ' + (${bedMap[4].dayIn != null ? #dates.format(bedMap[4].dayIn, 'yyyy-MM-dd') : '정보 없음'})"></p>
+            </div>
         </div>
     </div>
 </main>
@@ -96,3 +105,27 @@
 </script>
 </body>
 </html>
+
+
+<!--    <div class="beds">-->
+<!--        <div class="left">-->
+<!--            <div th:if="${bedMap[1] != null}">-->
+<!--                <h2 th:text="'배드 1 : ' + ${bedMap[1].patient != null ? bedMap[1].patient.name : '없음'}"></h2>-->
+<!--                <p th:text="'입원일자 : ' + (${bedMap[1].dayIn != null ? #dates.format(bedMap[1].dayIn, 'yyyy-MM-dd') : '정보 없음'})"></p>-->
+<!--            </div>-->
+<!--            <div th:if="${bedMap[2] != null}">-->
+<!--                <h2 th:text="'배드 2 : ' + ${bedMap[2].patient != null ? bedMap[2].patient.name : '없음'}"></h2>-->
+<!--                <p th:text="'입원일자 : ' + (${bedMap[2].dayIn != null ? #dates.format(bedMap[2].dayIn, 'yyyy-MM-dd') : '정보 없음'})"></p>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <div class="right">-->
+<!--            <div th:if="${bedMap[3] != null}">-->
+<!--                <h2 th:text="'배드 3 : ' + ${bedMap[3].patient != null ? bedMap[3].patient.name : '없음'}"></h2>-->
+<!--                <p th:text="'입원일자 : ' + (${bedMap[3].dayIn != null ? #dates.format(bedMap[3].dayIn, 'yyyy-MM-dd') : '정보 없음'})"></p>-->
+<!--            </div>-->
+<!--            <div th:if="${bedMap[4] != null}">-->
+<!--                <h2 th:text="'배드 4 : ' + ${bedMap[4].patient != null ? bedMap[4].patient.name : '없음'}"></h2>-->
+<!--                <p th:text="'입원일자 : ' + (${bedMap[4].dayIn != null ? #dates.format(bedMap[4].dayIn, 'yyyy-MM-dd') : '정보 없음'})"></p>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->

@@ -2,6 +2,13 @@ package com.hospital.management.hospitalmanagement.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 
 @Controller
 public class MainController {
@@ -21,9 +28,12 @@ public class MainController {
         return "patients"; // 전체 환자 검색 페이지
     }
 
+
     @GetMapping("/beds")
-    public String beds() {
-        return "beds"; // 병상별 환자 페이지
+    public String beds(Model model) {
+        Map<String, Object> emptyMap = new HashMap<>();
+        model.addAttribute("bedMap", emptyMap);  // "bedMap"이라는 이름으로 빈 맵 전달
+        return "beds";  // "beds"라는 뷰로 반환
     }
 
     @GetMapping("/organization")

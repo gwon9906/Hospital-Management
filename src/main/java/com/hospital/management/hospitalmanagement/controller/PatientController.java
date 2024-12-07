@@ -7,8 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,6 +47,18 @@ public class PatientController {
 
         // 같은 페이지로 이동
         return "patients";
+    }
+
+    @GetMapping("/patient_personal/{id}")
+    public String getPatientDetails(@PathVariable("id") Long id, Model model) {
+        // 환자 ID로 환자 정보 가져오기 (예: patientService를 사용)
+        Optional patient = patientRepository.findById(id);
+
+        // 환자 정보를 모델에 추가
+        model.addAttribute("patient", patient);
+
+        // 환자 상세 페이지로 이동
+        return "patient_personal";  // patient_personal.html로 이동
     }
 }
 
