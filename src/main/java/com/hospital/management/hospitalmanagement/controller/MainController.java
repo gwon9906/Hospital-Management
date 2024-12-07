@@ -26,15 +26,8 @@ public class MainController {
         return "beds"; // 병상별 환자 페이지
     }
 
-    @GetMapping("/stock")
-    public String stock() {
-        return "stock"; // 재고 확인 페이지
-    }
-
     @GetMapping("/organization")
     public String organization() {
         return "organization"; // 진료과 조직도 페이지
     }
-
-    // `dosage` 매핑을 제거했습니다.
 }
