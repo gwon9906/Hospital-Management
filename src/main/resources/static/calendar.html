@@ -57,8 +57,12 @@
                     });
             },
             eventClick: function(info) {
-                // 클릭 시 이벤트 세부정보 표시
-                alert(`근무자: ${info.event.title}\n`);
+                // 시작 및 종료 시간 가져오기
+                var start = info.event.start ? info.event.start.toLocaleString() : "정보 없음";
+                var end = info.event.end ? info.event.end.toLocaleString() : "정보 없음";
+
+                // 클릭 시 팝업창에 세부정보 표시
+                alert(`근무자: ${info.event.title}\n시작 시간: ${start}\n종료 시간: ${end}`);
             },
             displayEventTime: false  // 시간 표시하지 않음
         });

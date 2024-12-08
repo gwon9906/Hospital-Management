@@ -101,10 +101,11 @@ public class ScheduleController {
                 Map<String, Object> event = new HashMap<>();
                 if (schedule.getWorkDate() != null) {
                     String formattedWorkDate = schedule.getWorkDate().format(formatter);
+                    String formattedstartime = (schedule.getstartTime() != null) ? schedule.getstartTime().format(formatter) : formattedWorkDate;
                     String formattedEndTime = (schedule.getEndTime() != null) ? schedule.getEndTime().format(formatter) : formattedWorkDate;
 
                     event.put("title", schedule.getWorkType() + " - " + nurseNameStr);
-                    event.put("start", formattedWorkDate);
+                    event.put("start", formattedstartime);
                     event.put("end", formattedEndTime);
                     events.add(event);
                 }

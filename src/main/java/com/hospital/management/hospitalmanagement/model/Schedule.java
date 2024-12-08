@@ -52,7 +52,7 @@ public class Schedule {
         this.workDate = workDate;
     }
 
-    public LocalDateTime getStartTime() {
+    public LocalDateTime getstartTime() {
         return startTime;
     }
 
