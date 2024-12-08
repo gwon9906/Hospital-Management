@@ -1,28 +1,30 @@
 package com.hospital.management.hospitalmanagement.model;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import jakarta.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "재고") // 테이블 이름 "재고"
+@Table(name = "재고")
 public class Stock {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "약품ID", nullable = false) // 약품ID 매핑
+    @Column(name = "약품ID", nullable = false)
     private Long id;
 
-    @Column(name = "약품명", nullable = false, length = 255) // 약품명 매핑
+    @Column(name = "약품명", nullable = false, length = 255)
     private String name;
 
-    @Column(name = "수량", nullable = false) // 수량 매핑
+    @Column(name = "수량", nullable = false)
     private int quantity;
 
-    @Column(name = "유효기간", nullable = false) // 유효기간 매핑
+    @Column(name = "유효기간", nullable = false)
     @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "yyyy-MM-dd") // 날짜 형식 지정
     private Date expiryDate;
 
-    @Column(name = "보관위치", length = 255) // 보관위치 매핑
+    @Column(name = "보관위치", length = 255)
     private String location;
 
     // Getter 및 Setter
