@@ -58,7 +58,7 @@ public class ScheduleController {
         }
 
         model.addAttribute("schedules", schedules);  // 모델에 스케줄 데이터 추가
-        return "calendar";  // calendar.html을 반환
+        return "schedule";  // calendar.html을 반환
     }
 
     // /api/schedule 엔드포인트에서 JSON 데이터를 반환
