@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>스마트 간호사 서비스</title>
+    <title>병상 조회</title>
     <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
@@ -23,6 +23,7 @@
     </nav>
 </header>
 <main>
+    <h1>병상 조회</h1>
     <form th:action="@{/show}" method="get">
         <div class="search-dropdown">
             <select id="department" name="dp" aria-label="담당과 선택">
@@ -71,7 +72,7 @@
 </main>
 <footer>
     <p>동의대학교 컴퓨터공학과 데이터베이스 프로그래밍 2팀<br>
-        류현서(팀장) 이해권(팀원) 이은진(팀원)</p>
+        류연서(팀장) 이해권(팀원) 이은진(팀원)</p>
     <p>COPYRIGHT(C) DEU-COMPUTERSCIENCE. ALL RIGHTS RESERVED.</p>
 </footer>
 <script>
@@ -105,27 +106,3 @@
 </script>
 </body>
 </html>
-
-
-<!--    <div class="beds">-->
-<!--        <div class="left">-->
-<!--            <div th:if="${bedMap[1] != null}">-->
-<!--                <h2 th:text="'배드 1 : ' + ${bedMap[1].patient != null ? bedMap[1].patient.name : '없음'}"></h2>-->
-<!--                <p th:text="'입원일자 : ' + (${bedMap[1].dayIn != null ? #dates.format(bedMap[1].dayIn, 'yyyy-MM-dd') : '정보 없음'})"></p>-->
-<!--            </div>-->
-<!--            <div th:if="${bedMap[2] != null}">-->
-<!--                <h2 th:text="'배드 2 : ' + ${bedMap[2].patient != null ? bedMap[2].patient.name : '없음'}"></h2>-->
-<!--                <p th:text="'입원일자 : ' + (${bedMap[2].dayIn != null ? #dates.format(bedMap[2].dayIn, 'yyyy-MM-dd') : '정보 없음'})"></p>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--        <div class="right">-->
-<!--            <div th:if="${bedMap[3] != null}">-->
-<!--                <h2 th:text="'배드 3 : ' + ${bedMap[3].patient != null ? bedMap[3].patient.name : '없음'}"></h2>-->
-<!--                <p th:text="'입원일자 : ' + (${bedMap[3].dayIn != null ? #dates.format(bedMap[3].dayIn, 'yyyy-MM-dd') : '정보 없음'})"></p>-->
-<!--            </div>-->
-<!--            <div th:if="${bedMap[4] != null}">-->
-<!--                <h2 th:text="'배드 4 : ' + ${bedMap[4].patient != null ? bedMap[4].patient.name : '없음'}"></h2>-->
-<!--                <p th:text="'입원일자 : ' + (${bedMap[4].dayIn != null ? #dates.format(bedMap[4].dayIn, 'yyyy-MM-dd') : '정보 없음'})"></p>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->

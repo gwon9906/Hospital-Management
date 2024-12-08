@@ -1,15 +1,26 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>재고 관리</title>
     <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-    <header>
-        <h1>재고 관리 페이지</h1>
-    </header>
-
+<header>
+    <div class="logo">
+        <h1><a href="/">병원 관리 시스템</a></h1>
+    </div>
+    <nav>
+        <ul>
+            <li><a href="/schedule">근무표</a></li>
+            <li><a href="/patients">전체 환자 검색</a></li>
+            <li><a href="/beds">병상별 환자</a></li>
+            <li><a href="/dosage">약 용량 계산</a></li>
+            <li><a href="/stock">재고 확인</a></li>
+            <li><a href="/team">진료과 조직도</a></li>
+        </ul>
+    </nav>
+</header>
     <main>
         <h2>재고 목록</h2>
         <table>
@@ -52,5 +63,10 @@
             <button type="submit">추가</button>
         </form>
     </main>
+<footer>
+    <p>동의대학교 컴퓨터공학과 데이터베이스 프로그래밍 2팀<br>
+        류연서(팀장) 이해권(팀원) 이은진(팀원)</p>
+    <p>COPYRIGHT(C) DEU-COMPUTERSCIENCE. ALL RIGHTS RESERVED.</p>
+</footer>
 </body>
 </html>

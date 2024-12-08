@@ -14,7 +14,7 @@ body {
 }
 
 header {
-    background-color: #007bff;
+    background-color: #FF5656;
     color: white;
     padding: 15px 20px;
     display: flex;
@@ -25,6 +25,12 @@ header {
 header .logo h1 {
     margin: 0;
     font-size: 1.5rem;
+}
+
+header .logo h1 a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
 }
 
 header nav ul {
@@ -51,9 +57,9 @@ main {
 }
 
 .feature-section {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 항상 3개의 열로 구성 */
+    gap: 20px; /* 카드 간격 */
 }
 
 .feature-card {
@@ -62,11 +68,14 @@ main {
     padding: 20px;
     text-align: center;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    flex: 1;
-    min-width: 250px;
-    max-width: 300px;
     transition: transform 0.3s;
+    height: 30vh;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
 }
+
 
 .feature-card:hover {
     transform: scale(1.05);
@@ -86,19 +95,19 @@ main {
     display: inline-block;
     padding: 10px 20px;
     color: white;
-    background-color: #007bff;
+    background-color: #FF5656;
     text-decoration: none;
     border-radius: 5px;
     font-weight: bold;
 }
 
 .feature-card .btn:hover {
-    background-color: #0056b3;
+    background-color: #DA3A3A;
 }
 
 /* 푸터 스타일 */
 footer {
-    background-color: #f5f5f5;
+    background-color: #D9D9D9;
     text-align: center;
     padding: 10px;
     font-size: 14px;
@@ -129,14 +138,14 @@ footer {
     padding: 8px 16px;
     font-size: 16px;
     color: white;
-    background-color: #d32f2f;
+    background-color: #FF5656;
     border: none;
     border-radius: 5px;
     cursor: pointer;
 }
 
 .search-bar button:hover {
-    background-color: #a32626;
+    background-color: #DA3A3A;
 }
 
 .hover:hover {
@@ -158,13 +167,13 @@ footer {
 }
 
 .results-table th, .results-table td {
-    border: 1px solid #ddd;
+    border: 1px solid;
     text-align: center;
     padding: 8px;
 }
 
 .results-table th {
-    background-color: #f5f5f5;
+    background-color: #FF5656;
     font-weight: bold;
 }
 
@@ -192,7 +201,7 @@ footer {
 }
 
 .search-dropdown button {
-    background-color: #d43f3a;
+    background-color: #FF5656;
     color: #fff;
     cursor: pointer;
     border: none;
@@ -258,7 +267,7 @@ table th, table td {
 }
 
 table th {
-    background-color: #007bff;
+    background-color: #FF5656;
     color: white;
 }
 
@@ -267,7 +276,7 @@ table tr.low-stock {
 }
 
 button {
-    background-color: #007bff;
+    background-color: #FF5656;
     color: white;
     padding: 10px 20px;
     border: none;
@@ -276,7 +285,7 @@ button {
 }
 
 button:hover {
-    background-color: #0056b3;
+    background-color: #DA3A3A;
 }
 
 /* 입원 환자 상세 페이지 css */
@@ -346,3 +355,65 @@ button:hover {
     gap: 20px;
 }
 
+/* 팀 css */
+/* 팀 차트 전체 컨테이너 */
+.team-chart-container {
+  display: flex;
+  flex-wrap: wrap;  /* 진료과가 여러 줄에 걸쳐 나열될 수 있도록 설정 */
+  gap: 20px; /* 각 진료과 간격 */
+  justify-content: center; /* 진료과들 가운데 정렬 */
+}
+
+/* 진료과 박스 스타일 */
+.department-box {
+    background-color: white; /* 카드의 배경색을 통일 */
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid #ddd; /* 다른 카드와 일관된 테두리 */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 일관된 그림자 */
+    width: 200px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* 진료과 제목 스타일 */
+.department-box h2 {
+    font-size: 24px;
+    color: #FF5656; /* 병원 테마 색상으로 제목 강조 */
+    margin-bottom: 20px;
+}
+
+/* 간호사 이름을 세로로 나열할 박스 */
+.nurse-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+    width: 80%
+}
+
+/* 간호사 박스 스타일 */
+.nurse-box {
+    background-color: #f9f9f9; /* 연한 배경색 */
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ddd; /* 테두리를 다른 카드와 통일 */
+    text-align: center;
+    font-size: 16px;
+    color: #333; /* 일관된 텍스트 색상 */
+    width: 100%;
+    transition: transform 0.3s, background-color 0.3s;
+}
+
+.nurse-box:hover {
+    transform: scale(1.05); /* 호버 시 효과 유지 */
+    background-color: #ffe6e6; /* 호버 시 부드러운 색상 변화 */
+}
+
+/* 캘린더 css */
+#calendar {
+    max-width: 1100px;
+    margin: 40px auto;
+}

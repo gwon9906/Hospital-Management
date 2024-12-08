@@ -3,37 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>간호사 근무 캘린더</title>
+    <title>병원 관리 시스템</title>
+    <link rel="stylesheet" href="/css/style.css"> <!-- CSS 파일 -->
 
-    <!-- FullCalendar 최신 버전 v5.x -->
-    <link href="https://cdn.jsdelivr.net/npm/@fullcalendar/core@5.10.1/main.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/core@5.10.1/main.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@5.10.1/main.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/interaction@5.10.1/main.min.js"></script>
-
-    <!-- 추가 스타일 시트 -->
-    <link href="/css/calendar.css" rel="stylesheet">
 </head>
 <body>
-    <!-- 헤더 -->
-    <header>
-        <div class="logo">
-            <h1><a href="/">병원 관리 시스템</a></h1>
+<header>
+    <div class="logo">
+        <h1><a href="/">병원 관리 시스템</a></h1>
+    </div>
+    <nav>
+        <ul>
+            <li><a href="/schedule">근무표</a></li>
+            <li><a href="/patients">전체 환자 검색</a></li>
+            <li><a href="/beds">병상별 환자</a></li>
+            <li><a href="/dosage">약 용량 계산</a></li>
+            <li><a href="/stock">재고 확인</a></li>
+            <li><a href="/team">진료과 조직도</a></li>
+        </ul>
+    </nav>
+</header>
+<main>
+    <section class="feature-section">
+        <div class="feature-card">
+            <h2>근무표</h2>
+            <p>간호사 및 의사의 근무 일정을 확인합니다.</p>
+            <a href="/schedule" class="btn">이동</a>
         </div>
-        <nav>
-            <ul>
-                <li><a href="/schedule">근무표</a></li>
-                <li><a href="/patients">전체 환자 검색</a></li>
-                <li><a href="/beds">병상별 환자</a></li>
-                <li><a href="/dosage">약 용량 계산</a></li>
-                <li><a href="/stock">재고 확인</a></li>
-                <li><a href="/organization">진료과 조직도</a></li>
-            </ul>
-        </nav>
-    </header>
-
-    <!-- 스크립트 -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+        <div class="feature-card">
+            <h2>전체 환자 검색</h2>
+            <p>모든 환자 정보를 검색하고 확인합니다.</p>
+            <a href="/patients" class="btn">이동</a>
+        </div>
+        <div class="feature-card">
+            <h2>병상별 환자</h2>
+            <p>병상별 환자 배정을 확인하고 관리합니다.</p>
+            <a href="/beds" class="btn">이동</a>
+        </div>
+        <div class="feature-card">
+            <h2>약 용량 계산</h2>
+            <p>환자별 약 용량을 계산합니다.</p>
+            <a href="/dosage" class="btn">이동</a>
+        </div>
+        <div class="feature-card">
+            <h2>재고 확인</h2>
+            <p>약품 및 의료 장비의 재고를 확인합니다.</p>
+            <a href="/stock" class="btn">이동</a>
+        </div>
+        <div class="feature-card">
+            <h2>진료과 조직도</h2>
+            <p>병원의 진료과별 조직도를 확인합니다.</p>
+            <a href="/team" class="btn">이동</a>
+        </div>
+    </section>
+</main>
+<footer>
+    <p>동의대학교 컴퓨터공학과 데이터베이스 프로그래밍 2팀<br>
+        류연서(팀장) 이해권(팀원) 이은진(팀원)</p>
+    <p>COPYRIGHT(C) DEU-COMPUTERSCIENCE. ALL RIGHTS RESERVED.</p>
+</footer>
 </body>
 </html>

@@ -1,42 +1,67 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>투약량 계산</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>약 용량 계산</title>
+    <link rel="stylesheet" href="/css/style.css"> <!-- CSS 파일 -->
 </head>
 <body>
-<h1>투약량 계산</h1>
-<form method="post" th:action="@{/dosage/calculate}">
-    <label for="stock">약품:</label>
-    <select id="stock" name="stockId" required>
-        <option th:each="stock : ${stocks}" th:value="${stock.id}" th:text="${stock.name}"></option>
-    </select>
+<header>
+    <div class="logo">
+        <h1><a href="/">병원 관리 시스템</a></h1>
+    </div>
+    <nav>
+        <ul>
+            <li><a href="/schedule">근무표</a></li>
+            <li><a href="/patients">전체 환자 검색</a></li>
+            <li><a href="/beds">병상별 환자</a></li>
+            <li><a href="/dosage">약 용량 계산</a></li>
+            <li><a href="/stock">재고 확인</a></li>
+            <li><a href="/team">진료과 조직도</a></li>
+        </ul>
+    </nav>
+</header>
+<main>
+    <h1>투약량 계산</h1>
+    <form method="post" th:action="@{/dosage/calculate}">
+        <label for="stock">약품:</label>
+        <select id="stock" name="stockId" required>
+            <option th:each="stock : ${stocks}" th:value="${stock.id}" th:text="${stock.name}"></option>
+        </select>
 
-    <label for="weight">몸무게 (kg):</label>
-    <input type="number" step="0.1" id="weight" name="weight" required>
+        <label for="weight">몸무게 (kg):</label>
+        <input type="number" step="0.1" id="weight" name="weight" required>
 
-    <label for="ratePerHour">시간당 투약량 (mg/kg/hr):</label>
-    <input type="number" step="0.1" id="ratePerHour" name="ratePerHour" required>
+        <label for="ratePerHour">시간당 투약량 (mg/kg/hr):</label>
+        <input type="number" step="0.1" id="ratePerHour" name="ratePerHour" required>
 
-    <label for="hours">투약 시간 (hr):</label>
-    <input type="number" step="0.1" id="hours" name="hours" required>
+        <label for="hours">투약 시간 (hr):</label>
+        <input type="number" step="0.1" id="hours" name="hours" required>
 
-    <button type="submit">계산</button>
-</form>
-
-<div th:if="${totalDosage}">
-    <h2>계산 결과</h2>
-    <p>몸무게: <span th:text="${weight}"></span> kg</p>
-    <p>시간당 투약량: <span th:text="${ratePerHour}"></span> mg/kg/hr</p>
-    <p>투약 시간: <span th:text="${hours}"></span> hr</p>
-    <p>총 투약량: <span th:text="${totalDosage}"></span> mg</p>
-
-    <form method="post" th:action="@{/dosage/prescribe}">
-        <input type="hidden" name="stockId" th:value="${stock.id}">
-        <input type="hidden" name="dosage" th:value="${totalDosage}">
-        <button type="submit">처방</button>
+        <button type="submit">계산</button>
     </form>
-</div>
-<p th:if="${success}" th:text="${success}" style="color:green;"></p>
-<p th:if="${error}" th:text="${error}" style="color:red;"></p>
+
+    <div th:if="${totalDosage}">
+        <h2>계산 결과</h2>
+        <p>몸무게: <span th:text="${weight}"></span> kg</p>
+        <p>시간당 투약량: <span th:text="${ratePerHour}"></span> mg/kg/hr</p>
+        <p>투약 시간: <span th:text="${hours}"></span> hr</p>
+        <p>총 투약량: <span th:text="${totalDosage}"></span> mg</p>
+
+        <form method="post" th:action="@{/dosage/prescribe}">
+            <input type="hidden" name="stockId" th:value="${stock.id}">
+            <input type="hidden" name="dosage" th:value="${totalDosage}">
+            <button type="submit">처방</button>
+        </form>
+    </div>
+    <p th:if="${success}" th:text="${success}" style="color:green;"></p>
+    <p th:if="${error}" th:text="${error}" style="color:red;"></p>
+</main>
+<footer>
+    <p>동의대학교 컴퓨터공학과 데이터베이스 프로그래밍 2팀<br>
+        류연서(팀장) 이해권(팀원) 이은진(팀원)</p>
+    <p>COPYRIGHT(C) DEU-COMPUTERSCIENCE. ALL RIGHTS RESERVED.</p>
+</footer>
 </body>
 </html>

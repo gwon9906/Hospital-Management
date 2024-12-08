@@ -36,9 +36,4 @@ public class MainController {
         model.addAttribute("bedMap", emptyMap);  // "bedMap"이라는 이름으로 빈 맵 전달
         return "beds";  // "beds"라는 뷰로 반환
     }
-
-    @GetMapping("/organization")
-    public String organization() {
-        return "organization"; // 진료과 조직도 페이지
-    }
 }

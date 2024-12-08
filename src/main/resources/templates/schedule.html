@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>스마트 간호사 서비스</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <title>간호사 스케줄</title>
     <link href="https://cdn.jsdelivr.net/npm/fullcalendar/main.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar/main.min.js"></script>
     <style>
@@ -14,76 +15,101 @@
     </style>
 </head>
 <body>
-<h1>스마트 간호사 서비스</h1>
-<button id="filterButton">간호사별 월별 스케줄 보기</button>
-<div id="calendar"></div>
+<header>
+    <div class="logo">
+        <h1><a href="/">병원 관리 시스템</a></h1>
+    </div>
+    <nav>
+        <ul>
+            <li><a href="/schedule">근무표</a></li>
+            <li><a href="/patients">전체 환자 검색</a></li>
+            <li><a href="/beds">병상별 환자</a></li>
+            <li><a href="/dosage">약 용량 계산</a></li>
+            <li><a href="/stock">재고 확인</a></li>
+            <li><a href="/team">진료과 조직도</a></li>
+        </ul>
+    </nav>
+</header>
+<main>
+    <h1>월별 스케줄</h1>
+    <button id="filterButton">간호사별 월별 스케줄 보기</button>
+    <div id="calendar"></div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var calendarEl = document.getElementById('calendar');
 
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        var calendarEl = document.getElementById('calendar');
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                headerToolbar: {
+                    left: 'prev,next',
+                    center: 'title',
+                    right: 'dayGridMonth,timeGridWeek,timeGridDay'
+                },
+                events: function(fetchInfo, successCallback, failureCallback) {
+                    var nurseName = localStorage.getItem('selectedNurse');  // 로컬 스토리지에서 간호사 이름 가져오기
 
-        var calendar = new FullCalendar.Calendar(calendarEl, {
-            initialView: 'dayGridMonth',
-            headerToolbar: {
-                left: 'prev,next',
-                center: 'title',
-                right: 'dayGridMonth,timeGridWeek,timeGridDay'
-            },
-            events: function(fetchInfo, successCallback, failureCallback) {
-                var nurseName = localStorage.getItem('selectedNurse');  // 로컬 스토리지에서 간호사 이름 가져오기
+                    var url = '/schedules/api/schedule';
+                    if (nurseName) {
+                        url += '?nurseName=' + encodeURIComponent(nurseName);  // 간호사 이름이 있으면 쿼리 파라미터로 추가
+                    }
 
-                var url = '/schedules/api/schedule';
-                if (nurseName) {
-                    url += '?nurseName=' + encodeURIComponent(nurseName);  // 간호사 이름이 있으면 쿼리 파라미터로 추가
-                }
+                    fetch(url)
+                        .then(response => response.json())
+                        .then(data => {
+                            console.log("Received events:", data); // 데이터 확인
+                            var events = data.map(function(schedule) {
+                                return {
+                                    title: schedule.title,  // title이 근무자 이름과 근무유형
+                                    start: schedule.start,
+                                    end: schedule.end || schedule.start,  // end가 없으면 start와 동일
+                                    backgroundColor: '#FF7F7F', // 이벤트 배경 색상 (붉은 계열)
+                                    borderColor: '#FF4C4C',    // 테두리 색상 (짙은 붉은 계열)
+                                    textColor: '#FFFFFF'       // 텍스트 색상 (흰색)
+                                };
+                            });
 
-                fetch(url)
-                    .then(response => response.json())
-                    .then(data => {
-                        console.log("Received events:", data); // 데이터 확인
-                        var events = data.map(function(schedule) {
-                            return {
-                                title: schedule.title,  // title이 근무자 이름과 근무유형
-                                start: schedule.start,
-                                end: schedule.end || schedule.start  // end가 없으면 start와 동일
-                            };
+                            successCallback(events);  // FullCalendar에 이벤트 전달
+                        })
+                        .catch(error => {
+                            console.error("Error fetching events:", error);
+                            failureCallback(error);
                         });
+                },
+                eventClick: function(info) {
+                    // 시작 및 종료 시간 가져오기
+                    var start = info.event.start ? info.event.start.toLocaleString() : "정보 없음";
+                    var end = info.event.end ? info.event.end.toLocaleString() : "정보 없음";
 
-                        successCallback(events);  // FullCalendar에 이벤트 전달
-                    })
-                    .catch(error => {
-                        console.error("Error fetching events:", error);
-                        failureCallback(error);
-                    });
-            },
-            eventClick: function(info) {
-                // 시작 및 종료 시간 가져오기
-                var start = info.event.start ? info.event.start.toLocaleString() : "정보 없음";
-                var end = info.event.end ? info.event.end.toLocaleString() : "정보 없음";
+                    // 클릭 시 팝업창에 세부정보 표시
+                    alert(`근무자: ${info.event.title}\n시작 시간: ${start}\n종료 시간: ${end}`);
+                },
+                displayEventTime: false  // 시간 표시하지 않음
+            });
 
-                // 클릭 시 팝업창에 세부정보 표시
-                alert(`근무자: ${info.event.title}\n시작 시간: ${start}\n종료 시간: ${end}`);
-            },
-            displayEventTime: false  // 시간 표시하지 않음
+            calendar.render();
+
+            document.getElementById('filterButton').addEventListener('click', function () {
+                var selectedNurse = prompt("간호사 이름을 입력하세요:");
+                if (selectedNurse && selectedNurse.trim() !== '') {
+                    localStorage.setItem('selectedNurse', selectedNurse.trim());  // 간호사 이름을 로컬 스토리지에 저장
+                    calendar.refetchEvents();  // 간호사 이름이 입력되면 일정 새로고침
+                } else {
+                    alert("간호사 이름을 입력해 주세요.");
+                }
+            });
+
+            // 새로고침 시 로컬 스토리지에서 간호사 이름을 가져와서 처리
+            window.addEventListener('beforeunload', function() {
+                localStorage.removeItem('selectedNurse');  // 새로고침 시 로컬 스토리지에서 간호사 이름을 제거
+            });
         });
+    </script>
+</main>
 
-        calendar.render();
-
-        document.getElementById('filterButton').addEventListener('click', function () {
-            var selectedNurse = prompt("간호사 이름을 입력하세요:");
-            if (selectedNurse && selectedNurse.trim() !== '') {
-                localStorage.setItem('selectedNurse', selectedNurse.trim());  // 간호사 이름을 로컬 스토리지에 저장
-                calendar.refetchEvents();  // 간호사 이름이 입력되면 일정 새로고침
-            } else {
-                alert("간호사 이름을 입력해 주세요.");
-            }
-        });
-
-        // 새로고침 시 로컬 스토리지에서 간호사 이름을 가져와서 처리
-        window.addEventListener('beforeunload', function() {
-            localStorage.removeItem('selectedNurse');  // 새로고침 시 로컬 스토리지에서 간호사 이름을 제거
-        });
-    });
-</script>
+<footer>
+    <p>동의대학교 컴퓨터공학과 데이터베이스 프로그래밍 2팀<br>
+        류연서(팀장) 이해권(팀원) 이은진(팀원)</p>
+    <p>COPYRIGHT(C) DEU-COMPUTERSCIENCE. ALL RIGHTS RESERVED.</p>
+</footer>
 </body>
 </html>
