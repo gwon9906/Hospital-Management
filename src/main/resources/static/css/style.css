@@ -355,6 +355,23 @@ button:hover {
     gap: 20px;
 }
 
+.action-section {
+    padding: 20px;
+}
+
+.move-section {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+}
+
+.discharge-section {
+    display: flex;
+    justify-content: center;
+}
+
+
 /* 팀 css */
 /* 팀 차트 전체 컨테이너 */
 .team-chart-container {
