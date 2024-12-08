@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Team Chart</title>
+  <link rel="stylesheet" href="team.css">
+</head>
+<body>
+<h1>Team Chart</h1>
+<div class="team-chart-container">
+  <!-- 진료과 반복 -->
+  <div th:each="department : ${departments}" class="department-box">
+    <h2 th:text="${department.name}">Department Name</h2>
+    <div class="nurse-container">
+      <!-- 각 진료과에 소속된 간호사 리스트 반복 -->
+      <div th:each="nurse : ${department.nurses}" class="nurse-box">
+        <p th:text="${nurse.name}">Team Member Name</p>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
