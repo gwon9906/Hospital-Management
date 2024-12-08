@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>스마트 간호사 서비스</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<header>
+  <div class="logo">
+    <h1><a href="/">병원 관리 시스템</a></h1>
+  </div>
+  <nav>
+    <ul>
+      <li><a href="/schedule">근무표</a></li>
+      <li><a href="/patients">전체 환자 검색</a></li>
+      <li><a href="/beds">병상별 환자</a></li>
+      <li><a href="/dosage">약 용량 계산</a></li>
+      <li><a href="/stock">재고 확인</a></li>
+      <li><a href="/organization">진료과 조직도</a></li>
+    </ul>
+  </nav>
+</header>
+<main>
+  <div class="patient-details-container">
+    <h1>환자 상세 정보</h1>
+    <div class="patient-info">
+      <div class="info-row">
+        <span class="info-label">이름:</span>
+        <span class="info-value" th:text="${bed.patient.name}">홍길동</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">생년월일:</span>
+        <span class="info-value" th:text="${bed.patient.birthDate != null ? #dates.format(bed.patient.birthDate, 'yyyy-MM-dd') : '정보 없음'}">1990-01-01</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">성별:</span>
+        <span class="info-value" th:text="${bed.patient.gender != null ? (bed.patient.gender == 'M' ? '남성' : '여성') : '정보 없음'}">남성</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">병상 번호:</span>
+        <span class="info-value" th:text="${bed.bedNumber}">1</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">병실 번호:</span>
+        <span class="info-value" th:text="${bed.roomNumber}">101</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">입원일자:</span>
+        <span class="info-value" th:text="${bed.dayIn != null ? #dates.format(bed.dayIn, 'yyyy-MM-dd') : '정보 없음'}">2024-11-01</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="action-section">
+    <!-- 1st row: Bed Move -->
+    <div class="move-section">
+      <label for="newRoomNumber">이동할 병실 번호:</label>
+      <input type="number" id="newRoomNumber" placeholder="병실 번호 입력">
+      <label for="newBedNumber">이동할 병상 번호:</label>
+      <input type="number" id="newBedNumber" placeholder="병상 번호 입력">
+      <button id="move-button">병상 이동</button>
+    </div>
+    <!-- 2nd row: Discharge -->
+    <div class="discharge-section">
+      <button id="discharge-button">퇴원 수속</button>
+    </div>
+  </div>
+  <script th:inline="javascript">
+    // Thymeleaf 변수 'bed'의 값은 서버에서 렌더링될 때 처리되어 아래처럼 JavaScript 변수로 할당됩니다.
+    var patientId = /*[[${bed.patient != null ? bed.patient.id : null}]]*/; // Thymeleaf 변수 'bed.patient.id'를 JavaScript 변수에 할당
+
+    document.getElementById('move-button').addEventListener('click', function () {
+      const roomNumber = parseInt(document.getElementById('newRoomNumber').value);  // parseInt로 변환
+      const bedNumber = parseInt(document.getElementById('newBedNumber').value);    // parseInt로 변환
+
+      if (!roomNumber || !bedNumber) {
+        alert('병실 번호와 병상 번호를 모두 입력해주세요.');
+        return;
+      }
+
+      fetch('/move', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          patientId: patientId, // JavaScript 변수 사용
+          newRoomNumber: parseInt(roomNumber), // 숫자로 변환
+          newBedNumber: parseInt(bedNumber)  // 숫자로 변환
+        })
+      }).then(response => {
+        if (response.ok) {
+          alert('병상 이동이 완료되었습니다.');
+          window.history.back(); // 이전 페이지로 돌아감
+        } else {
+          alert('병상 이동 중 오류가 발생했습니다.');
+        }
+      });
+    });
+
+    document.getElementById('discharge-button').addEventListener('click', function() {
+      if (!confirm("퇴원 수속을 진행하시겠습니까?")) {
+        return;
+      }
+
+      fetch("/discharge", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ patientId: patientId }),
+      })
+        .then(response => {
+                if (response.ok) {
+                alert('퇴원 수속이 완료되었습니다.');
+                  window.history.back(); // 이전 페이지로 돌아감
+                } else {
+                  throw new Error(`Error ${response.status}: ${errorMessage}`);
+                }
+              })
+              .then(redirectUrl => {
+                window.history.back(); // 이전 페이지로 돌아감
+              })
+              .catch(error => {
+                alert(error.message);
+              });  // 이 함수가 호출됨
+    });
+  </script>
+</main>
+<footer>
+  <p>동의대학교 컴퓨터공학과 데이터베이스 프로그래밍 2팀<br>
+    류현서(팀장) 이해권(팀원) 이은진(팀원)</p>
+  <p>COPYRIGHT(C) DEU-COMPUTERSCIENCE. ALL RIGHTS RESERVED.</p>
+</footer>
+</body>
+</html>

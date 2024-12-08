@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>환자 검색</title>
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+</head>
+<body>
+<div class="container">
+    <header>
+        <div class="logo">
+            <h1><a href="/">병원 관리 시스템</a></h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="/schedule">근무표</a></li>
+                <li><a href="/patients">전체 환자 검색</a></li>
+                <li><a href="/beds">병상별 환자</a></li>
+                <li><a href="/dosage">약 용량 계산</a></li>
+                <li><a href="/stock">재고 확인</a></li>
+                <li><a href="/organization">진료과 조직도</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <form th:action="@{/search}" method="get">
+            <section class="search-section">
+                <div class="search-bar">
+                    <input type="text" placeholder="이름" name="name" class="search-input">
+                    <input type="text" placeholder="ID" name="id" class="search-input">
+                    <button type="submit" class="search-button">검색</button>
+                </div>
+            </section>
+        </form>
+        <section class="results-section">
+            <h2>검색 결과</h2>
+            <table class="results-table">
+                <thead>
+                <tr>
+                    <th>이름</th>
+                    <th>ID</th>
+                    <th>성별</th>
+                    <th>생년월일</th>
+                    <th>전화번호</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="patient : ${patients}" class="hover"
+                    th:onclick="'window.location.href=\'/patient_personal?id=' + ${patient.id} + '\';'" style="cursor: pointer;">
+                    <a th:href="@{/patient_personal/{id}(id=${patient.id})}">
+                    <td th:text="${patient.name}"></td>
+                    <td th:text="${patient.id}"></td>
+                    <td th:text="${patient.gender}"></td>
+                    <td th:text="${patient.birthDate}"></td>
+                    <td th:text="${patient.phone}"></td>
+                    </a>
+                </tr>
+                </tbody>
+            </table>
+            <p id="no-results-message" class="no-results" th:if="${#lists.isEmpty(patients)}">검색 결과 없음</p>
+        </section>
+    </main>
+    <footer class="footer">
+        <p>동의대학교 컴퓨터공학과 데이터베이스 프로그래밍 2팀</p>
+        <p>COPYRIGHT(C) DEU-COMPUTERSCIENCE. ALL RIGHTS RESERVED.</p>
+    </footer>
+</div>
+</body>
+</html>
