@@ -42,7 +42,7 @@ public class DosageController {
             @RequestParam double dosage,
             Model model) {
         try {
-            stockService.updateStockQuantity(stockId, (int) -dosage);
+            stockService.callInventoryUpdateProcedure(stockId, dosage);
             model.addAttribute("success", "처방이 완료되었습니다.");
         } catch (Exception e) {
             model.addAttribute("error", e.getMessage());

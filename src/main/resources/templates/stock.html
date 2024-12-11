@@ -40,16 +40,16 @@
                 <th>보관위치</th>
             </tr>
         </thead>
-        <tbody>
-            <tr th:each="stock : ${stocks}"
-                th:classappend="${#lists.contains(lowStockItems, stock)} ? 'low-stock' : ''">
-                <td th:text="${stock.id}">ID</td>
-                <td th:text="${stock.name}">약품명</td>
-                <td th:text="${stock.quantity}">수량</td>
-                <td th:text="${stock.expiryDate}">유효기간</td>
-                <td th:text="${stock.location}">위치</td>
-            </tr>
-        </tbody>
+            <tbody>
+                <tr th:each="stock : ${stocks}"
+                    th:classappend="${#lists.contains(lowStockItems, stock)} ? 'low-stock' : ''">
+                    <td th:text="${stock.id}">ID</td>
+                    <td th:text="${stock.name}">약품명</td>
+                    <td th:text="${stock.quantity}">수량</td>
+                    <td th:text="${stock.expiryDate}">유효기간</td>
+                    <td th:text="${stock.location}">위치</td>
+                </tr>
+            </tbody>
     </table>
 
     <h3>총 재고 수량: <span th:text="${totalQuantity}"></span></h3>

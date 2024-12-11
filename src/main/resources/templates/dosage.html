@@ -24,6 +24,7 @@
 </header>
 <main>
     <h1>투약량 계산</h1>
+    <!-- 투약량 계산 폼 -->
     <form method="post" th:action="@{/dosage/calculate}">
         <label for="stock">약품:</label>
         <select id="stock" name="stockId" required>
@@ -42,6 +43,7 @@
         <button type="submit">계산</button>
     </form>
 
+    <!-- 계산 결과 및 처방 폼 -->
     <div th:if="${totalDosage}">
         <h2>계산 결과</h2>
         <p>몸무게: <span th:text="${weight}"></span> kg</p>
@@ -55,6 +57,8 @@
             <button type="submit">처방</button>
         </form>
     </div>
+
+    <!-- 성공 및 오류 메시지 -->
     <p th:if="${success}" th:text="${success}" style="color:green;"></p>
     <p th:if="${error}" th:text="${error}" style="color:red;"></p>
 </main>
